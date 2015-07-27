@@ -31,6 +31,12 @@ describe('placeholders', function () {
     assert.equal(format('%s', 'foo'), 'foo')
   })
 
+  it('should be safe from circular serialization', function () {
+    var o = {}
+    o.o = o
+    assert.equal(util.format('%j', o), '[Circular]')
+  })
+
   it('should process number arguments', function () {
     assert.equal(format('%d', 42.0), '42')
     assert.equal(format('%d', 42), '42')
