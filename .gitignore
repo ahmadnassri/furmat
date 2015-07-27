@@ -1,0 +1,5 @@
+*.log
+.env*
+coverage
+node_modules
+!.env.example

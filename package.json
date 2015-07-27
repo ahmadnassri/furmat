@@ -1,0 +1,39 @@
+{
+  "version": "0.1.0",
+  "name": "furmat",
+  "description": "super powered printf & util.format equivalent string formatting, with locals & chainable modifiers.",
+  "author": "Ahmad Nassri <ahmad@ahmadnassri.com> (https://www.ahmadnassri.com/)",
+  "homepage": "https://github.com/ahmadnassri/furmat",
+  "repository": "ahmadnassri/furmat",
+  "license": "ISC",
+  "main": "lib/index",
+  "keywords": [
+    "furmat"
+  ],
+  "engines": {
+    "node": ">=0.10"
+  },
+  "files": [
+    "lib"
+  ],
+  "bugs": {
+    "url": "https://github.com/ahmadnassri/furmat/issues"
+  },
+  "scripts": {
+    "pretext": "standard && echint",
+    "test": "mocha",
+    "posttest": "npm run coverage",
+    "coverage": "istanbul cover --dir coverage _mocha -- -R dot",
+    "codeclimate": "codeclimate < coverage/lcov.info"
+  },
+  "devDependencies": {
+    "codeclimate-test-reporter": "^0.1.0",
+    "echint": "^1.5.0",
+    "istanbul": "^0.3.17",
+    "mocha": "^2.2.5",
+    "standard": "^4.5.4"
+  },
+  "dependencies": {
+    "debug-log": "^1.0.0"
+  }
+}
