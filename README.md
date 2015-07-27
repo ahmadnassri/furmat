@@ -103,7 +103,7 @@ var format = furmat({
 format('%s:upper | %s:lower', 'this will become upper cased', 'THIS WILL BECOME LOWER CASED')
 ```
 
-will output:
+###### output:
 
 ```
 THIS WILL BECOME UPPER CASED | this will become lower cased
@@ -115,7 +115,7 @@ you can also chain modifiers:
 format('%s:upper:first | %s:lower:first', 'a', 'B')
 ```
 
-will output:
+###### output:
 
 ```
 A | b
@@ -138,7 +138,7 @@ var format = furmat({
 format('Will the real %name %action')
 ```
 
-will output:
+###### output:
 
 ```
 Will the real Slim Shady please stand up?
@@ -147,7 +147,6 @@ Will the real Slim Shady please stand up?
 you can also attach [`modifiers`](#modifiers) to `locals`:
 
 ```js
-
 var format = furmat({
   modifiers: {
     upper: function (value) { 
@@ -168,7 +167,7 @@ var format = furmat({
 format('Will the real %name:lower %action:upper')
 ```
 
-will output:
+###### output:
 
 ```
 Will the real slim shady PLEASE STAND UP?
