@@ -20,7 +20,7 @@
     "url": "https://github.com/ahmadnassri/furmat/issues"
   },
   "scripts": {
-    "pretext": "standard && echint",
+    "pretest": "standard && echint",
     "test": "mocha",
     "posttest": "npm run coverage",
     "coverage": "istanbul cover --dir coverage _mocha -- -R dot",
