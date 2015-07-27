@@ -121,7 +121,7 @@ format('%s:upper:first | %s:lower:first', 'a', 'B')
 A | b
 ```
 
-### locals
+### Locals
 
 Locals are named variable references that behave in an identical manner to placeholders, but with a pre-defined value set at the time of creating the `furmat` function
 
