@@ -25,8 +25,6 @@ npm install --save furmat
 Returns: `Function` The string formatting function.
 
 ```js
-var furmat = require('furmat')
-
 var format = furmat({
   locals: {
     name: 'Ahmad'
@@ -86,8 +84,6 @@ Modifiers are references to named functions meant to modify the placeholder,
 ###### example
 
 ```js
-var furmat = require('furmat')
-
 var format = furmat({
   modifiers: {
     upper: function (string) { 
