@@ -19,6 +19,7 @@ npm install --save furmat
 ### furmat([options])
 
 - **options** (`Object`, *optional*): configuration object
+  - **chalk** (`Boolean`, *optional*): enable/disable [chalk](https://github.com/chalk/chalk) modifiers *Default: true*
   - **locals** (`Object`, *optional*): locals object *(`key => value` pairs)*
   - **modifers** (`Object`, *optional*): modifiers object *(`name => function` pairs)*
 
@@ -119,6 +120,28 @@ format('%s:upper:first | %s:lower:first', 'a', 'B')
 
 ```
 A | b
+```
+
+### [Chalk Styles](https://github.com/chalk/chalk) Modifiers
+
+Fürmat includes Chalk Styles modifiers, which are useful for console logging. *See [`oh-my-log`](https://github.com/ahmadnassri/oh-my-log)*.
+
+###### example
+
+```js
+var format = furmat()
+
+format('%s:red', 'this text will be red in the console')
+```
+
+you can disable the Chalk modifiers by simply setting the `chalk` option to false:
+
+```js
+var format = furmat({
+  chalk: false
+})
+
+format('%s:red', 'plain text')
 ```
 
 ### Locals
