@@ -19,7 +19,7 @@ npm install --save furmat
 ### furmat([options])
 
 - **options** (`Object`, *optional*): configuration object
-  - **chalk** (`Boolean`, *optional*): enable/disable [chalk](https://github.com/chalk/chalk) modifiers *Default: true*
+  - **chalk** (`Boolean`, *optional*): enable/disable [Chalk](https://github.com/chalk/chalk) modifiers *Default: true*
   - **locals** (`Object`, *optional*): locals object *(`key => value` pairs)*
   - **modifers** (`Object`, *optional*): modifiers object *(`name => function` pairs)*
 
