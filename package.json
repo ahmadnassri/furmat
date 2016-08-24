@@ -31,7 +31,7 @@
     "echint": "^1.5.3",
     "istanbul": "^0.4.2",
     "mocha": "^3.0.0",
-    "standard": "^7.1.2"
+    "standard": "^8.0.0"
   },
   "dependencies": {
     "chalk": "^1.1.1",
