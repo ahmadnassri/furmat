@@ -1,5 +1,5 @@
 import furmat from '../src'
-import { inherits } from 'util'
+import { inherits, inspect } from 'util'
 import { test } from 'tap'
 
 const format = furmat()
@@ -90,7 +90,9 @@ test('process arguments in sequence', (assert) => {
 test('process errors', (assert) => {
   assert.plan(1)
 
-  assert.equal(format('foo', new Error('foo')), 'foo [Error: foo]')
+  let error = new Error('foo')
+
+  assert.equal(format('foo', error), 'foo ' + inspect(error))
 })
 
 test('process custom errors', (assert) => {
@@ -104,5 +106,7 @@ test('process custom errors', (assert) => {
 
   inherits(CustomError, Error)
 
-  assert.equal(format('foo', new CustomError('bar')), 'foo [CustomError: bar]')
+  let error = new CustomError('bar')
+
+  assert.equal(format('foo', error), 'foo ' + inspect(error))
 })

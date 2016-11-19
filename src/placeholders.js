@@ -11,10 +11,12 @@ export default function (input, regex, args) {
     if (x === '%%') return '%'
 
     if (args.length) {
+      let value = args.shift()
+
       switch (x) {
-        case '%s': return String(args.shift())
-        case '%d': return Number(args.shift())
-        case '%j': return Json(args.shift())
+        case '%s': return String(value)
+        case '%d': return Number(value)
+        case '%j': return Json(value)
       }
     }
 

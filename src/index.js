@@ -3,7 +3,7 @@ import locals from './locals'
 import modifiers from './modifiers'
 import placeholders from './placeholders'
 import regexp from './regexp'
-import util from 'util'
+import { inspect } from 'util'
 
 const defaults = {
   chalk: true,
@@ -62,7 +62,7 @@ export default function (options = {}) {
       if (arg === null || (typeof arg !== 'object' && typeof arg !== 'symbol')) {
         output += ' ' + arg
       } else {
-        output += ' ' + util.inspect(arg)
+        output += ' ' + inspect(arg)
       }
     })
 
