@@ -1,29 +1,24 @@
-/* global describe, it */
+import furmat from '../src'
+import { test } from 'tap'
 
-'use strict'
+const format = furmat({
+  locals: {
+    name: 'ahmad'
+  },
 
-var assert = require('assert')
-var furmat = require('..')
+  modifiers: {
+    date: (date) => date.toDateString(),
+    upper: (str) => str.toUpperCase()
+  }
+})
 
-describe('all together', function () {
-  var format = furmat({
-    locals: {
-      name: 'ahmad'
-    },
+test('allow for locals, variables and placeholders substitutions', (assert) => {
+  assert.plan(1)
 
-    modifiers: {
-      date: function (date) {
-        return date.toDateString()
-      },
+  let date = new Date()
 
-      upper: function (str) {
-        return str.toUpperCase()
-      }
-    }
-  })
+  let result = format('hello %name:upper, today is %s:date, have a %s day!', date, 'wonderful', '\n', 'bye bye')
+  let expected = `hello AHMAD, today is ${date.toDateString()}, have a wonderful day! \n bye bye`
 
-  it('should allow for locals, variables and placeholders substitutions', function () {
-    var date = new Date()
-    assert.equal(format('hello %name:upper, today is %s:date, have a %s day!', date, 'wonderful', '\n', 'bye bye'), 'hello AHMAD, today is ' + date.toDateString() + ', have a wonderful day! \n bye bye')
-  })
+  assert.same(result, expected)
 })

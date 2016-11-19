@@ -1,5 +1,3 @@
-'use strict'
-
 function Json (obj) {
   try {
     return JSON.stringify(obj)
@@ -8,8 +6,8 @@ function Json (obj) {
   }
 }
 
-module.exports = function (input, regex, args) {
-  return input.replace(regex, function (x) {
+export default function (input, regex, args) {
+  return input.replace(regex, (x) => {
     if (x === '%%') return '%'
 
     if (args.length) {

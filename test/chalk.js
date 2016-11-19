@@ -1,36 +1,36 @@
-/* global describe, it */
+import furmat from '../src'
+import { test } from 'tap'
 
-'use strict'
+const format = furmat({
+  locals: {
+    name: 'ahmad'
+  }
+})
 
-var assert = require('assert')
-var furmat = require('..')
+test('use chalk styles', (assert) => {
+  assert.plan(1)
 
-describe('furmat', function () {
-  describe('chalk', function () {
-    var format = furmat({
-      locals: {
-        name: 'ahmad'
-      }
-    })
+  assert.equal(format('%s:blue', 'foo'), '\u001b[34mfoo\u001b[39m')
+})
 
-    it('should use chalk styles', function () {
-      assert.equal(format('%s:blue', 'foo'), '\u001b[34mfoo\u001b[39m')
-    })
+test('chain chalk styles', (assert) => {
+  assert.plan(1)
 
-    it('should chain chalk styles', function () {
-      assert.equal(format('%s:blue:bold', 'foo'), '\u001b[1m\u001b[34mfoo\u001b[39m\u001b[22m')
-    })
+  assert.equal(format('%s:blue:bold', 'foo'), '\u001b[1m\u001b[34mfoo\u001b[39m\u001b[22m')
+})
 
-    it('should apply locals with chalk styles', function () {
-      assert.equal(format('name: %name:blue:bold'), 'name: \u001b[1m\u001b[34mahmad\u001b[39m\u001b[22m')
-    })
+test('apply locals with chalk styles', (assert) => {
+  assert.plan(1)
 
-    it('should skip chalk when disabled', function () {
-      var format = furmat({
-        chalk: false
-      })
+  assert.equal(format('name: %name:blue:bold'), 'name: \u001b[1m\u001b[34mahmad\u001b[39m\u001b[22m')
+})
 
-      assert.equal(format('%s:blue', 'foo'), 'foo:blue')
-    })
+test('skip chalk when disabled', (assert) => {
+  assert.plan(1)
+
+  let format2 = furmat({
+    chalk: false
   })
+
+  assert.equal(format2('%s:blue', 'foo'), 'foo:blue')
 })

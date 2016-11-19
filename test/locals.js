@@ -1,28 +1,28 @@
-/* global describe, it */
+import furmat from '../src'
+import { test } from 'tap'
 
-'use strict'
+const format = furmat({
+  locals: {
+    foo: 'bar',
+    baz: 'foo',
+    name: 'ahmad'
+  }
+})
 
-var assert = require('assert')
-var furmat = require('..')
+test('replace simple locals', (assert) => {
+  assert.plan(1)
 
-describe('locals', function () {
-  var format = furmat({
-    locals: {
-      foo: 'bar',
-      baz: 'foo',
-      name: 'ahmad'
-    }
-  })
+  assert.equal(format('%foo'), 'bar')
+})
 
-  it('should replace simple locals', function () {
-    assert.equal(format('%foo'), 'bar')
-  })
+test('allow for repeated locals', (assert) => {
+  assert.plan(1)
 
-  it('should allow for repeated locals', function () {
-    assert.equal(format('%foo:%foo'), 'bar:bar')
-  })
+  assert.equal(format('%foo:%foo'), 'bar:bar')
+})
 
-  it('should allow for multiple locals', function () {
-    assert.equal(format('%foo:%foo:%baz'), 'bar:bar:foo')
-  })
+test('allow for multiple locals', (assert) => {
+  assert.plan(1)
+
+  assert.equal(format('%foo:%foo:%baz'), 'bar:bar:foo')
 })

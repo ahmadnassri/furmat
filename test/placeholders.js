@@ -1,89 +1,108 @@
-/* global describe, it */
+import furmat from '../src'
+import { inherits } from 'util'
+import { test } from 'tap'
 
-'use strict'
+const format = furmat()
 
-var assert = require('assert')
-var furmat = require('..')
-var util = require('util')
+test('fail if first argument is not a string', (assert) => {
+  assert.plan(6)
 
-describe('placeholders', function () {
-  var format = furmat()
+  assert.throws(format, Error)
+  assert.throws(function () { format([]) }, Error)
+  assert.throws(function () { format({}) }, Error)
+  assert.throws(function () { format(null) }, Error)
+  assert.throws(function () { format(true) }, Error)
+  assert.throws(function () { format(false) }, Error)
+})
 
-  it('should fail if first argument is not a string', function () {
-    assert.throws(format, Error)
-    assert.throws(function () { format([]) }, Error)
-    assert.throws(function () { format({}) }, Error)
-    assert.throws(function () { format(null) }, Error)
-    assert.throws(function () { format(true) }, Error)
-    assert.throws(function () { format(false) }, Error)
-  })
+test('return simple strings as is', (assert) => {
+  assert.plan(2)
 
-  it('should return simple strings as is', function () {
-    assert.equal(format(''), '')
-    assert.equal(format('test'), 'test')
-  })
+  assert.equal(format(''), '')
+  assert.equal(format('test'), 'test')
+})
 
-  it('should merge in remainder arguments', function () {
-    assert.equal(format('foo', 'bar', 'baz'), 'foo bar baz')
-  })
+test('merge in remainder arguments', (assert) => {
+  assert.plan(1)
 
-  it('should process string arguments', function () {
-    assert.equal(format('%s', 'foo'), 'foo')
-  })
+  assert.equal(format('foo', 'bar', 'baz'), 'foo bar baz')
+})
 
-  it('should be safe from circular serialization', function () {
-    var o = {}
-    o.o = o
-    assert.equal(format('%j', o), '[Circular]')
-  })
+test('process string arguments', (assert) => {
+  assert.plan(1)
 
-  it('should process number arguments', function () {
-    assert.equal(format('%d', 42.0), '42')
-    assert.equal(format('%d', 42), '42')
-    assert.equal(format('%s', 42), '42')
-    assert.equal(format('%j', 42), '42')
+  assert.equal(format('%s', 'foo'), 'foo')
+})
 
-    assert.equal(format('%d', '42.0'), '42')
-    assert.equal(format('%d', '42'), '42')
-    assert.equal(format('%s', '42'), '42')
-    assert.equal(format('%j', '42'), '"42"')
-  })
+test('be safe from circular serialization', (assert) => {
+  assert.plan(1)
 
-  it('should allow for escaping', function () {
-    assert.equal(format('%%s%s', 'foo'), '%sfoo')
-    assert.equal(format('%%%s%%', 'hi'), '%hi%')
-    assert.equal(format('%%%s%%%%', 'hi'), '%hi%%')
-  })
+  let o = {}
+  o.o = o
 
-  it('should return as is if no arguments present', function () {
-    assert.equal(format('%s'), '%s')
-    assert.equal(format('%s:%s'), '%s:%s')
-  })
+  assert.equal(format('%j', o), '[Circular]')
+})
 
-  it('should process "undefined" values into strings', function () {
-    assert.equal(format('%s', undefined), 'undefined')
-  })
+test('process number arguments', (assert) => {
+  assert.plan(8)
 
-  it('should process arguments in sequence', function () {
-    assert.equal(format('%s:%s', undefined), 'undefined:%s')
-    assert.equal(format('%s:%s', 'foo'), 'foo:%s')
-    assert.equal(format('%s:%s', 'foo', 'bar'), 'foo:bar')
-    assert.equal(format('%s:%s', 'foo', 'bar', 'baz'), 'foo:bar baz')
-  })
+  assert.equal(format('%d', 42.0), '42')
+  assert.equal(format('%d', 42), '42')
+  assert.equal(format('%s', 42), '42')
+  assert.equal(format('%j', 42), '42')
 
-  it('should process errors', function () {
-    assert.equal(format('foo', new Error('foo')), 'foo [Error: foo]')
-  })
+  assert.equal(format('%d', '42.0'), '42')
+  assert.equal(format('%d', '42'), '42')
+  assert.equal(format('%s', '42'), '42')
+  assert.equal(format('%j', '42'), '"42"')
+})
 
-  it('should process custom errors', function () {
-    function CustomError (msg) {
-      Error.call(this)
-      Object.defineProperty(this, 'message', { value: msg, enumerable: false })
-      Object.defineProperty(this, 'name', { value: 'CustomError', enumerable: false })
-    }
+test('allow for escaping', (assert) => {
+  assert.plan(3)
 
-    util.inherits(CustomError, Error)
+  assert.equal(format('%%s%s', 'foo'), '%sfoo')
+  assert.equal(format('%%%s%%', 'hi'), '%hi%')
+  assert.equal(format('%%%s%%%%', 'hi'), '%hi%%')
+})
 
-    assert.equal(format('foo', new CustomError('bar')), 'foo [CustomError: bar]')
-  })
+test('return as is if no arguments present', (assert) => {
+  assert.plan(2)
+
+  assert.equal(format('%s'), '%s')
+  assert.equal(format('%s:%s'), '%s:%s')
+})
+
+test('process "undefined" values into strings', (assert) => {
+  assert.plan(1)
+
+  assert.equal(format('%s', undefined), 'undefined')
+})
+
+test('process arguments in sequence', (assert) => {
+  assert.plan(4)
+
+  assert.equal(format('%s:%s', undefined), 'undefined:%s')
+  assert.equal(format('%s:%s', 'foo'), 'foo:%s')
+  assert.equal(format('%s:%s', 'foo', 'bar'), 'foo:bar')
+  assert.equal(format('%s:%s', 'foo', 'bar', 'baz'), 'foo:bar baz')
+})
+
+test('process errors', (assert) => {
+  assert.plan(1)
+
+  assert.equal(format('foo', new Error('foo')), 'foo [Error: foo]')
+})
+
+test('process custom errors', (assert) => {
+  assert.plan(1)
+
+  function CustomError (msg) {
+    Error.call(this)
+    Object.defineProperty(this, 'message', { value: msg, enumerable: false })
+    Object.defineProperty(this, 'name', { value: 'CustomError', enumerable: false })
+  }
+
+  inherits(CustomError, Error)
+
+  assert.equal(format('foo', new CustomError('bar')), 'foo [CustomError: bar]')
 })

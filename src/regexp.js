@@ -1,15 +1,11 @@
-'use strict'
-
-var debug = require('debug-log')('furmat')
-
-module.exports = function (options) {
+export default function (options) {
   var opts = options || {}
 
   // setup regex rules
-  var names = new RegExp()
-  var locals = new RegExp()
-  var modifiers = new RegExp()
-  var placeholders = new RegExp('(?:%[sdj%])', 'g')
+  let names = new RegExp()
+  let locals = new RegExp()
+  let modifiers = new RegExp()
+  let placeholders = new RegExp('(?:%[sdj%])', 'g')
 
   if (opts.locals) {
     locals = new RegExp('(?:%(' + Object.keys(opts.locals).join('|') + '))', 'g')
@@ -19,9 +15,6 @@ module.exports = function (options) {
     names = new RegExp('(' + Object.keys(opts.modifiers).join('|') + ')', 'g')
     modifiers = new RegExp(['(?::', names.source, ')+'].join(''), 'g')
   }
-
-  debug('regex:locals', locals.toString())
-  debug('regex:modifiers', modifiers.toString())
 
   return {
     locals: locals,

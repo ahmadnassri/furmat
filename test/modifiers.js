@@ -1,48 +1,44 @@
-/* global describe, it */
+import furmat from '../src'
+import { test } from 'tap'
 
-'use strict'
+const format = furmat({
+  locals: {
+    name: 'ahmad'
+  },
 
-var assert = require('assert')
-var furmat = require('..')
+  modifiers: {
+    upper: (value) => value.toUpperCase(),
+    char: (value) => value.charAt(0),
+    invalid: 'bar'
+  }
+})
 
-describe('furmat', function () {
-  var format = furmat({
-    locals: {
-      name: 'ahmad'
-    },
+test('use modifier', (assert) => {
+  assert.plan(1)
 
-    modifiers: {
-      upper: function (value) {
-        return value.toUpperCase()
-      },
+  assert.equal(format('%s:upper', 'foo'), 'FOO')
+})
 
-      char: function (value) {
-        return value.charAt(0)
-      },
+test('skip unknown modifier', (assert) => {
+  assert.plan(1)
 
-      invalid: 'bar'
-    }
-  })
+  assert.equal(format('%s:foo', 'foo'), 'foo:foo')
+})
 
-  describe('modifier', function () {
-    it('should use modifier', function () {
-      assert.equal(format('%s:upper', 'foo'), 'FOO')
-    })
+test('skip invalid modifier', (assert) => {
+  assert.plan(1)
 
-    it('should skip unknown modifier', function () {
-      assert.equal(format('%s:foo', 'foo'), 'foo:foo')
-    })
+  assert.equal(format('%s:foo', 'foo'), 'foo:foo')
+})
 
-    it('should skip invalid modifier', function () {
-      assert.equal(format('%s:foo', 'foo'), 'foo:foo')
-    })
+test('chain modifiers', (assert) => {
+  assert.plan(1)
 
-    it('should chain modifiers', function () {
-      assert.equal(format('%s:upper:char', 'foo'), 'F')
-    })
+  assert.equal(format('%s:upper:char', 'foo'), 'F')
+})
 
-    it('should apply locals with modifiers', function () {
-      assert.equal(format('name: %name, first: %name:char:upper'), 'name: ahmad, first: A')
-    })
-  })
+test('apply locals with modifiers', (assert) => {
+  assert.plan(1)
+
+  assert.equal(format('name: %name, first: %name:char:upper'), 'name: ahmad, first: A')
 })

@@ -6,12 +6,35 @@
 [![Downloads][npm-downloads]][npm-url]
 [![Code Climate][codeclimate-quality]][codeclimate-url]
 [![Coverage Status][codeclimate-coverage]][codeclimate-url]
+[![Dependency Status][dependencyci-image]][dependencyci-url]
 [![Dependencies][david-image]][david-url]
 
 ## Install
 
-```sh
-npm install --save furmat
+```bash
+npm install --only=production --save furmat
+```
+
+## Usage
+
+I recommend using an optimized build matching your Node.js environment version, otherwise, the standard `require` would work just fine with any version of Node `>= v4.0` .
+
+```js
+/*
+ * Node 7
+ */
+const furmat = require('furmat/lib/node7')
+
+/*
+ * Node 6
+ */
+const furmat = require('furmat/lib/node6')
+
+/*
+ * Node 4 (Default)
+ * Note: additional ES2015 polyfills may be required
+ */
+var furmat = require('furmat')
 ```
 
 ## API
@@ -26,23 +49,15 @@ npm install --save furmat
 Returns: `Function` The string formatting function.
 
 ```js
-var format = furmat({
+const format = furmat({
   locals: {
     name: 'Ahmad'
   },
 
   modifiers: {
-    capitalize: function (string) { 
-      return string.charAt(0).toUpperCase() + string.slice(1)
-    },
-    
-    upper: function (string) { 
-      return string.toUpperCase()
-    },
-
-    first: function (string) {
-      return string.charAt(0)
-    }
+    capitalize: (string) => string.charAt(0).toUpperCase() + string.slice(1),
+    upper: (string) => string.toUpperCase(),
+    first: (string) => string.charAt(0)
   }
 })
 
@@ -80,24 +95,16 @@ you can add predefined [`locals`](#locals) and modify *placeholders* & *locals* 
 
 ### Modifiers
 
-Modifiers are references to named functions meant to modify the placeholder, 
+Modifiers are references to named functions meant to modify the placeholder,
 
 ###### example
 
 ```js
-var format = furmat({
+const format = furmat({
   modifiers: {
-    upper: function (string) { 
-      return string.toUpperCase()
-    },
-
-    lower: function (string) { 
-      return string.toLowerCase()
-    }, 
-
-    first: function (string) {
-      return string.charAt(0)
-    }
+    upper: (string) => string.toUpperCase(),
+    lower: (string) => string.toLowerCase(),
+    first: (string) => string.charAt(0)
   }
 })
 
@@ -129,7 +136,7 @@ Fürmat includes Chalk Styles modifiers, which are useful for console logging. *
 ###### example
 
 ```js
-var format = furmat()
+const format = furmat()
 
 format('%s:red', 'this text will be red in the console')
 ```
@@ -137,7 +144,7 @@ format('%s:red', 'this text will be red in the console')
 you can disable the Chalk modifiers by simply setting the `chalk` option to false:
 
 ```js
-var format = furmat({
+const format = furmat({
   chalk: false
 })
 
@@ -151,7 +158,7 @@ Locals are named variable references that behave in an identical manner to place
 ###### example
 
 ```js
-var format = furmat({
+const format = furmat({
   locals: {
     name: 'Slim Shady',
     action: 'please stand up?'
@@ -170,15 +177,10 @@ Will the real Slim Shady please stand up?
 you can also attach [`modifiers`](#modifiers) to `locals`:
 
 ```js
-var format = furmat({
+const format = furmat({
   modifiers: {
-    upper: function (value) { 
-      return value.toUpperCase()
-    },
-
-    lower: function (value) { 
-      return value.toLowerCase()
-    }
+    upper: (value) => value.toUpperCase(),
+    lower: (value) => value.toLowerCase()
   },
 
   locals: {
@@ -196,11 +198,13 @@ format('Will the real %name:lower %action:upper')
 Will the real slim shady PLEASE STAND UP?
 ```
 
-## License
+----
+> :copyright: [ahmadnassri.com](https://www.ahmadnassri.com/) &nbsp;&middot;&nbsp;
+> License: [ISC][license-url] &nbsp;&middot;&nbsp;
+> Github: [@ahmadnassri](https://github.com/ahmadnassri) &nbsp;&middot;&nbsp;
+> Twitter: [@ahmadnassri](https://twitter.com/ahmadnassri)
 
-[ISC License](LICENSE) &copy; [Ahmad Nassri](https://www.ahmadnassri.com/)
-
-[license-url]: https://github.com/ahmadnassri/furmat/blob/master/LICENSE
+[license-url]: http://choosealicense.com/licenses/isc/
 
 [travis-url]: https://travis-ci.org/ahmadnassri/furmat
 [travis-image]: https://img.shields.io/travis/ahmadnassri/furmat.svg?style=flat-square
@@ -216,3 +220,6 @@ Will the real slim shady PLEASE STAND UP?
 
 [david-url]: https://david-dm.org/ahmadnassri/furmat
 [david-image]: https://img.shields.io/david/ahmadnassri/furmat.svg?style=flat-square
+
+[dependencyci-url]: https://dependencyci.com/github/ahmadnassri/furmat
+[dependencyci-image]: https://dependencyci.com/github/ahmadnassri/furmat/badge?style=flat-square
