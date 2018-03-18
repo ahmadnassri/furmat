@@ -1,5 +1,5 @@
-import furmat from '../src'
-import { test } from 'tap'
+const furmat = require('..')
+const { test } = require('tap')
 
 const format = furmat({
   locals: {

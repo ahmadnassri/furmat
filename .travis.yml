@@ -1,33 +1,41 @@
+if: tag IS blank
+
 language: node_js
 
+services: docker
+
 node_js:
- - 4
- - 6
- - 7
-
-env:
-  - BABEL_ENV=test
-
-matrix:
-  fast_finish: true
+  - 9
+  - 8
+  - 6
 
 cache:
   directories:
     - node_modules
 
-before_script:
-  - npm prune
+stages:
+  - cache
+  - test
+  - coverage
+  - release
 
-after_success:
-  - npm run coverage
-  - npm run codeclimate
-  - BABEL_ENV=v4 npm run compile -- -d lib
-  - BABEL_ENV=v6 npm run compile -- -d lib/node6
-  - BABEL_ENV=v7 npm run compile -- -d lib/node7
-  - BABEL_ENV=browsers npm run compile -- -d lib/browsers
-  - npm run semantic-release
+before_install: export PATH=$PATH:$TRAVIS_BUILD_DIR/.scripts
 
-branches:
-  except:
-    - /^v\d+\.\d+\.\d+$/
-    - /^greenkeeper\/.+/
+jobs:
+  include:
+    - stage: cache
+      node: 9
+      script: codeclimate engines:install
+
+    - stage: coverage
+      node: 9
+      before_script: test-reporter before-build
+      script: npm run test:tap
+      after_script: test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
+
+    - stage: release
+      node: 9
+      install: npm install --production
+      script: npx semantic-release
+      if: branch = master
+      if: type IN (push)

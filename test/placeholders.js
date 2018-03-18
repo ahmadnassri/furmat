@@ -1,10 +1,10 @@
-import furmat from '../src'
-import { inherits, inspect } from 'util'
-import { test } from 'tap'
+const furmat = require('..')
+const { inherits, inspect } = require('util')
+const { test } = require('tap')
 
 const format = furmat()
 
-test('fail if first argument is not a string', (assert) => {
+test('fail if first argument is not a string', assert => {
   assert.plan(6)
 
   assert.throws(format, Error)
@@ -15,26 +15,26 @@ test('fail if first argument is not a string', (assert) => {
   assert.throws(function () { format(false) }, Error)
 })
 
-test('return simple strings as is', (assert) => {
+test('return simple strings as is', assert => {
   assert.plan(2)
 
   assert.equal(format(''), '')
   assert.equal(format('test'), 'test')
 })
 
-test('merge in remainder arguments', (assert) => {
+test('merge in remainder arguments', assert => {
   assert.plan(1)
 
   assert.equal(format('foo', 'bar', 'baz'), 'foo bar baz')
 })
 
-test('process string arguments', (assert) => {
+test('process string arguments', assert => {
   assert.plan(1)
 
   assert.equal(format('%s', 'foo'), 'foo')
 })
 
-test('be safe from circular serialization', (assert) => {
+test('be safe = require(circular serialization', assert => {
   assert.plan(1)
 
   let o = {}
@@ -43,7 +43,7 @@ test('be safe from circular serialization', (assert) => {
   assert.equal(format('%j', o), '[Circular]')
 })
 
-test('process number arguments', (assert) => {
+test('process number arguments', assert => {
   assert.plan(8)
 
   assert.equal(format('%d', 42.0), '42')
@@ -57,7 +57,7 @@ test('process number arguments', (assert) => {
   assert.equal(format('%j', '42'), '"42"')
 })
 
-test('allow for escaping', (assert) => {
+test('allow for escaping', assert => {
   assert.plan(3)
 
   assert.equal(format('%%s%s', 'foo'), '%sfoo')
@@ -65,20 +65,20 @@ test('allow for escaping', (assert) => {
   assert.equal(format('%%%s%%%%', 'hi'), '%hi%%')
 })
 
-test('return as is if no arguments present', (assert) => {
+test('return as is if no arguments present', assert => {
   assert.plan(2)
 
   assert.equal(format('%s'), '%s')
   assert.equal(format('%s:%s'), '%s:%s')
 })
 
-test('process "undefined" values into strings', (assert) => {
+test('process "undefined" values into strings', assert => {
   assert.plan(1)
 
   assert.equal(format('%s', undefined), 'undefined')
 })
 
-test('process arguments in sequence', (assert) => {
+test('process arguments in sequence', assert => {
   assert.plan(4)
 
   assert.equal(format('%s:%s', undefined), 'undefined:%s')
@@ -87,7 +87,7 @@ test('process arguments in sequence', (assert) => {
   assert.equal(format('%s:%s', 'foo', 'bar', 'baz'), 'foo:bar baz')
 })
 
-test('process errors', (assert) => {
+test('process errors', assert => {
   assert.plan(1)
 
   let error = new Error('foo')
@@ -95,7 +95,7 @@ test('process errors', (assert) => {
   assert.equal(format('foo', error), 'foo ' + inspect(error))
 })
 
-test('process custom errors', (assert) => {
+test('process custom errors', assert => {
   assert.plan(1)
 
   function CustomError (msg) {
