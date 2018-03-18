@@ -1,5 +1,18 @@
 version: "2"
 
+checks:
+  method-complexity:
+    config:
+      threshold: 12
+
+  method-lines:
+    config:
+      threshold: 37
+
+  argument-count:
+    config:
+      threshold: 5
+
 plugins:
   duplication:
     enabled: true
