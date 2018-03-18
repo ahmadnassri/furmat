@@ -1,40 +1,11 @@
-# fürmat [![version][npm-version]][npm-url] [![License][npm-license]][license-url]
+# fürmat [![version][npm-version]][npm-url] [![License][license-image]][license-url] [![Build Status][travis-image]][travis-url] [![Downloads][npm-downloads]][npm-url] [![Coverage Status][codeclimate-coverage]][codeclimate-url]
 
 > super powered `printf` & [`util.format`](https://nodejs.org/api/util.html#util_util_format_format) equivalent string formatting, with locals & chainable modifiers.
-
-[![Build Status][travis-image]][travis-url]
-[![Downloads][npm-downloads]][npm-url]
-[![Code Climate][codeclimate-quality]][codeclimate-url]
-[![Coverage Status][codeclimate-coverage]][codeclimate-url]
-[![Dependency Status][dependencyci-image]][dependencyci-url]
-[![Dependencies][david-image]][david-url]
 
 ## Install
 
 ```bash
-npm install --only=production --save furmat
-```
-
-## Usage
-
-I recommend using an optimized build matching your Node.js environment version, otherwise, the standard `require` would work just fine with any version of Node `>= v4.0` .
-
-```js
-/*
- * Node 7
- */
-const furmat = require('furmat/lib/node7')
-
-/*
- * Node 6
- */
-const furmat = require('furmat/lib/node6')
-
-/*
- * Node 4 (Default)
- * Note: additional ES2015 polyfills may be required
- */
-var furmat = require('furmat')
+npm install --production --save furmat
 ```
 
 ## API
@@ -111,7 +82,7 @@ const format = furmat({
 format('%s:upper | %s:lower', 'this will become upper cased', 'THIS WILL BECOME LOWER CASED')
 ```
 
-###### output:
+###### output
 
 ```
 THIS WILL BECOME UPPER CASED | this will become lower cased
@@ -123,7 +94,7 @@ you can also chain modifiers:
 format('%s:upper:first | %s:lower:first', 'a', 'B')
 ```
 
-###### output:
+###### output
 
 ```
 A | b
@@ -168,7 +139,7 @@ const format = furmat({
 format('Will the real %name %action')
 ```
 
-###### output:
+###### output
 
 ```
 Will the real Slim Shady please stand up?
@@ -192,34 +163,27 @@ const format = furmat({
 format('Will the real %name:lower %action:upper')
 ```
 
-###### output:
+###### output
 
 ```
 Will the real slim shady PLEASE STAND UP?
 ```
 
-----
-> :copyright: [ahmadnassri.com](https://www.ahmadnassri.com/) &nbsp;&middot;&nbsp;
-> License: [ISC][license-url] &nbsp;&middot;&nbsp;
-> Github: [@ahmadnassri](https://github.com/ahmadnassri) &nbsp;&middot;&nbsp;
+---
+> License: [ISC][license-url] &bull; 
+> Copyright: [ahmadnassri.com](https://www.ahmadnassri.com) &bull; 
+> Github: [@ahmadnassri](https://github.com/ahmadnassri) &bull; 
 > Twitter: [@ahmadnassri](https://twitter.com/ahmadnassri)
 
 [license-url]: http://choosealicense.com/licenses/isc/
+[license-image]: https://img.shields.io/github/license/ahmadnassri/furmat.svg?style=flat-square
 
 [travis-url]: https://travis-ci.org/ahmadnassri/furmat
 [travis-image]: https://img.shields.io/travis/ahmadnassri/furmat.svg?style=flat-square
 
 [npm-url]: https://www.npmjs.com/package/furmat
-[npm-license]: https://img.shields.io/npm/l/furmat.svg?style=flat-square
 [npm-version]: https://img.shields.io/npm/v/furmat.svg?style=flat-square
 [npm-downloads]: https://img.shields.io/npm/dm/furmat.svg?style=flat-square
 
 [codeclimate-url]: https://codeclimate.com/github/ahmadnassri/furmat
-[codeclimate-quality]: https://img.shields.io/codeclimate/github/ahmadnassri/furmat.svg?style=flat-square
-[codeclimate-coverage]: https://img.shields.io/codeclimate/coverage/github/ahmadnassri/furmat.svg?style=flat-square
-
-[david-url]: https://david-dm.org/ahmadnassri/furmat
-[david-image]: https://img.shields.io/david/ahmadnassri/furmat.svg?style=flat-square
-
-[dependencyci-url]: https://dependencyci.com/github/ahmadnassri/furmat
-[dependencyci-image]: https://dependencyci.com/github/ahmadnassri/furmat/badge?style=flat-square
+[codeclimate-coverage]: https://api.codeclimate.com/v1/badges/9ed829b3e93e46b50c80/test_coverage?style=flat-square
